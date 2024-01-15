@@ -1,7 +1,7 @@
 import Product from '../components/Product.jsx';
 import { products } from '../data/products.js';
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {products.map((prod, i) => (
@@ -11,4 +11,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
