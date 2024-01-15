@@ -1,10 +1,21 @@
 import { Link, useParams } from 'react-router-dom';
-import { products } from '../data/products.js';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function ProductPage() {
   const { id } = useParams();
 
-  const product = products.find((p) => p.id == id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get(`/api/products/${id}`);
+
+      setProduct(data);
+    };
+    fetchData();
+  }, [id]);
+
   return (
     <div className="container mx-auto mt-8 p-4">
       <Link to={'/'}>
@@ -26,13 +37,13 @@ export default function ProductPage() {
           <p className="text-gray-700 mt-2">{product.description}</p>
 
           <div className="flex items-center mt-2">
-            <span className="text-yellow-500 mr-1">{product.rating}</span>
+            <span className="text-yellow-500 mr-1">{product?.rating}</span>
             <span className="text-gray-500 ">
-              ({product.numReviews} reviews)
+              ({product?.numReviews} reviews)
             </span>
           </div>
 
-          <p className="text-gray-700 mt-2">${product.price.toFixed(2)}</p>
+          <p className="text-gray-700 mt-2">${product?.price?.toFixed(2)}</p>
           <p className="text-gray-700 mt-2">In Stock: {product.countInStock}</p>
 
           <div className="mt-4">
